@@ -1,0 +1,103 @@
+<?xml version = "1.0"?>
+<Rooms>
+    <Room id="1">
+        <room_number>101</room_number>
+        <numberOfPlaces>5</numberOfPlaces>
+        <pricePerNight>225</pricePerNight>
+        <description>Compact bedrooms are suited for single occupancy or short-stay double occupancy as they have limited space and storage.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>3</id>
+            </facility>
+            <facility>
+                <id>4</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+    <Room id="2">
+        <room_number>102</room_number>
+        <numberOfPlaces>1</numberOfPlaces>
+        <pricePerNight>250</pricePerNight>
+        <description>A warm Tuscan style two-story room with a king size bed and outdoor balcony on the lower level, and a queen size bed in the upper floor loft. This room also contains a shower/tub combination with a granite vanity in the restroom.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>2</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+    <Room id="3">
+        <room_number>103</room_number>
+        <numberOfPlaces>2</numberOfPlaces>
+        <pricePerNight>250</pricePerNight>
+        <description>This exquisite suite is modish in design with vibrant art and décor. Located in the entry is a bar station with a refrigerator.  The bedroom has a king size bed and flat screen television with a desk work area. The luxurious bathroom boasts a spacious walk-in shower with double shower heads, and roomy vanity counters.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>2</id>
+            </facility>
+            <facility>
+                <id>3</id>
+            </facility>
+            <facility>
+                <id>4</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+    <Room id="4">
+        <room_number>104</room_number>
+        <numberOfPlaces>3</numberOfPlaces>
+        <pricePerNight>250</pricePerNight>
+        <description>A charming suite preserving the heritage in the historic inn building that offers a distinct charm with a private patio, king canopy bed, soaking tub, separate tiled shower, tucked away dining room with a mirror dressing table, and a refrigerator. The Hideaway Suite requires entry through the Towne House Restaurant, as it is located on the second floor of the original historic inn.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>2</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+    <Room id="5">
+        <room_number>105</room_number>
+        <numberOfPlaces>4</numberOfPlaces>
+        <pricePerNight>120</pricePerNight>
+        <description>This room include two queen size beds, flat screen tv, tiled shower-bath tub combination, a refrigerator, and coffee station. This room also have work desk areas and French doors leading out to either a balcony or veranda.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>2</id>
+            </facility>
+            <facility>
+                <id>3</id>
+            </facility>
+            <facility>
+                <id>4</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+</Rooms>
