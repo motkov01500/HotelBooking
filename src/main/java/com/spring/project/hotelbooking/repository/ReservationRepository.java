@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation,Integer> {
 
-    @Query("FROM Reservation RES LEFT JOIN RES.user US WHERE US.email = :email")
+    @Query("FROM Reservation RES JOIN RES.user U WHERE U.email = :email")
     List<Reservation> getReservationByUserEmail(@Param("email") String email);
 
     @Query("FROM Reservation RES WHERE RES.resConfirmation = false")

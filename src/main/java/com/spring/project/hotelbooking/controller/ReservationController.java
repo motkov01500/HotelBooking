@@ -5,6 +5,7 @@ import com.spring.project.hotelbooking.dto.reservation.ReservationCheckInDTO;
 import com.spring.project.hotelbooking.dto.reservation.ReservationDTO;
 import com.spring.project.hotelbooking.dto.reservation.ReservationExtendDateDto;
 import com.spring.project.hotelbooking.entity.Reservation;
+import com.spring.project.hotelbooking.exception.UserNotFoundException;
 import com.spring.project.hotelbooking.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

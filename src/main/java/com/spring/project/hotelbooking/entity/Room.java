@@ -75,10 +75,6 @@ public class Room {
         return roomNumber;
     }
 
-    public Set<Image> getImages() {
-        return images;
-    }
-
     //endregion
 
     //region setters

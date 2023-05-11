@@ -16,26 +16,20 @@ public class Image {
     private int id;
 
     @Column(name = "image_binary", nullable = false)
-    @Lob
     private Blob imageBinary;
+
+    @ManyToMany(mappedBy = "images")
+    private Set<Room> rooms;
 
     //region getters
     public int getId() {
         return id;
-    }
-
-    public Blob getImageBinary() {
-        return imageBinary;
     }
     //endregion
 
     //region setters
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setImageBinary(Blob imageBinary) {
-        this.imageBinary = imageBinary;
     }
     //endregion
 }
