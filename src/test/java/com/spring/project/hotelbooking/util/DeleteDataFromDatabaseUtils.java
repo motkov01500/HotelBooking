@@ -13,21 +13,26 @@ public class DeleteDataFromDatabaseUtils {
     private RoomRepository roomRepository;
     private FacilityRepository facilityRepository;
     private GuestReviewRepository guestReviewRepository;
+    private ReservationRepository reservationRepository;
 
     @Autowired
-    public DeleteDataFromDatabaseUtils(UserRepository userRepository, UserRoleRepository userRoleRepository, GuestInformationRepository guestInformationRepository, RoomRepository roomRepository, FacilityRepository facilityRepository, GuestReviewRepository guestReviewRepository) {
+    public DeleteDataFromDatabaseUtils(UserRepository userRepository, UserRoleRepository userRoleRepository, GuestInformationRepository guestInformationRepository,
+                                       RoomRepository roomRepository, FacilityRepository facilityRepository,
+                                       GuestReviewRepository guestReviewRepository, ReservationRepository reservationRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.guestInformationRepository = guestInformationRepository;
         this.roomRepository = roomRepository;
         this.facilityRepository = facilityRepository;
         this.guestReviewRepository = guestReviewRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public void cleanDatabase() {
+        reservationRepository.deleteAll();
         userRepository.deleteAll();
         userRoleRepository.deleteAll();
-        guestReviewRepository.deleteAll();
+        guestInformationRepository.deleteAll();
         roomRepository.deleteAll();
         facilityRepository.deleteAll();
         guestReviewRepository.deleteAll();

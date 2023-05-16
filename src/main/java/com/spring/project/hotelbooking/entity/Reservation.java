@@ -19,6 +19,9 @@ public class Reservation {
     @Column(name = "checkout_date", nullable = false)
     private LocalDate checkOutDate;
 
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
     @Column(name = "res_confirmation", nullable = false)
     private boolean resConfirmation;
 
@@ -30,6 +33,9 @@ public class Reservation {
 
     @Column(name = "booking_id")
     private String bookingId;
+
+    @Column(name = "total_price")
+    private double totalPrice;
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false)
@@ -88,6 +94,14 @@ public class Reservation {
     public String getBookingId() {
         return bookingId;
     }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
     //endregion
 
     //region setters
@@ -129,6 +143,14 @@ public class Reservation {
 
     public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
     //endregion
 }

@@ -5,6 +5,9 @@ import com.spring.project.hotelbooking.dto.GuestInformationDTO;
 import com.spring.project.hotelbooking.dto.reservation.CreateReservationDTO;
 import com.spring.project.hotelbooking.dto.reservation.ReservationExtendDateDto;
 import com.spring.project.hotelbooking.entity.*;
+import com.spring.project.hotelbooking.service.LoyaltyService;
+import com.spring.project.hotelbooking.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -33,6 +36,13 @@ public class TestDataUtils {
         Facility facility = new Facility();
         facility.setName(name);
         return facility;
+    }
+
+    public static Loyalty createLoyalty(String name, int discount) {
+        Loyalty loyalty = new Loyalty();
+        loyalty.setName(name);
+        loyalty.setDiscount(discount);
+        return loyalty;
     }
 
     public static Room createRoom() {
@@ -99,6 +109,11 @@ public class TestDataUtils {
         reservation.setBookingId(UUID.randomUUID().toString());
         reservation.setGuestInformations(guestInformations);
         reservation.setRooms(rooms);
+        double priceOfRooms = 0;
+        for(Room room: rooms) {
+            priceOfRooms+=room.getPricePerNight();
+        }
+        reservation.setTotalPrice(calculateTotalPriceOfRooms(priceOfRooms,user));
         return reservation;
     }
 
@@ -130,5 +145,18 @@ public class TestDataUtils {
         ReservationExtendDateDto reservationExtendDateDto = new ReservationExtendDateDto();
         reservationExtendDateDto.setCheckInDate(date);
         return reservationExtendDateDto;
+    }
+
+    private static double calculateTotalPriceOfRooms(double priceOfRooms, User user) {
+        int discount = user.getLoyalty().getDiscount();
+        return priceOfRooms - ((priceOfRooms * discount)) / 100;
+    }
+
+    private double calculatePriceOfRooms(Set<Room> rooms) {
+        double sum = 0;
+        for (Room room: rooms) {
+            sum += room.getPricePerNight();
+        }
+        return sum;
     }
 }

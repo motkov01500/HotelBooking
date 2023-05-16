@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDate;
 
 public class ErrorResponse {
+
     private HttpStatus httpStatus;
     private LocalDate currentDate;
     private String message;

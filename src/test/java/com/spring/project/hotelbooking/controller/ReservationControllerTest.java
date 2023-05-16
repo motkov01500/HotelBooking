@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.project.hotelbooking.dto.reservation.CreateReservationDTO;
 import com.spring.project.hotelbooking.dto.reservation.ReservationCheckInDTO;
 import com.spring.project.hotelbooking.dto.reservation.ReservationExtendDateDto;
-import com.spring.project.hotelbooking.entity.GuestInformation;
-import com.spring.project.hotelbooking.entity.Reservation;
-import com.spring.project.hotelbooking.entity.Room;
-import com.spring.project.hotelbooking.entity.User;
+import com.spring.project.hotelbooking.entity.*;
+import com.spring.project.hotelbooking.util.DeleteDataFromDatabaseUtils;
 import com.spring.project.hotelbooking.util.PersistDataUtils;
 import com.spring.project.hotelbooking.util.TestDataUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -40,17 +38,20 @@ class ReservationControllerTest {
     private final MockMvc mockMvc;
     private final PersistDataUtils persistDataUtils;
     private final ObjectMapper objectMapper;
+    private final DeleteDataFromDatabaseUtils deleteDataFromDatabaseUtils;
 
     @Autowired
-    public ReservationControllerTest(MockMvc mockMvc, PersistDataUtils persistDataUtils, ObjectMapper objectMapper) {
+    public ReservationControllerTest(MockMvc mockMvc, PersistDataUtils persistDataUtils,
+                                     ObjectMapper objectMapper, DeleteDataFromDatabaseUtils deleteDataFromDatabaseUtils) {
         this.mockMvc = mockMvc;
         this.persistDataUtils = persistDataUtils;
         this.objectMapper = objectMapper;
+        this.deleteDataFromDatabaseUtils = deleteDataFromDatabaseUtils;
     }
 
     @AfterEach
     public void cleanDatabase() {
-        persistDataUtils.cleanDatabase();
+        deleteDataFromDatabaseUtils.cleanDatabase();
     }
 
     @Test
@@ -66,8 +67,6 @@ class ReservationControllerTest {
         //then
         response.andExpect(status().isOk());
         response.andExpect(jsonPath("$", hasSize(2)));
-        //response.andExpect(jsonPath("$[0].user.email").value("testtestov@gmail.com"));
-        //response.andExpect(jsonPath("$[1].user.email").value("testtestov@gmail.com"));
         response.andDo(print());
     }
 
@@ -90,7 +89,8 @@ class ReservationControllerTest {
     @Test
     public void testCreateReservation() throws Exception {
         //given
-        User user = persistDataUtils.persistUser("testestov@gmail.com");
+        Loyalty loyalty = persistDataUtils.persistLoyalty("Golden",10);
+        User user = persistDataUtils.persistUser("testestov@gmail.com",loyalty);
         Set<Room> rooms = persistDataUtils.persistRooms();
         Set<Integer> roomIds = rooms
                 .stream()
@@ -110,6 +110,7 @@ class ReservationControllerTest {
         //then
         response.andExpect(status().isCreated());
         response.andExpect(jsonPath("$.user.id").value(String.valueOf(reservation.getUserId())));
+        response.andExpect(jsonPath("$.totalPrice").value(216));
     }
 
     @Test

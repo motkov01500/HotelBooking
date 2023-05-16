@@ -5,15 +5,20 @@ import com.spring.project.hotelbooking.entity.UserRole;
 public class UserDTO {
 
     private String email;
-    private UserRole role;
+    private UserRoleDTO role;
+    private LoyaltyDTO loyalty;
 
     //region getter
     public String getEmail() {
         return email;
     }
 
-    public UserRole getRole() {
+    public UserRoleDTO getRole() {
         return role;
+    }
+
+    public LoyaltyDTO getLoyalty() {
+        return loyalty;
     }
     //endregion
 
@@ -22,8 +27,12 @@ public class UserDTO {
         this.email = email;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(UserRoleDTO role) {
         this.role = role;
+    }
+
+    public void setLoyalty(LoyaltyDTO loyalty) {
+        this.loyalty = loyalty;
     }
     //endregion
 }

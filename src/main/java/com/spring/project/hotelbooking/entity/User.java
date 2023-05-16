@@ -17,9 +17,14 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+
     @ManyToOne(targetEntity = UserRole.class)
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole role;
+
+    @ManyToOne(targetEntity = Loyalty.class)
+    @JoinColumn(name = "loyalty_id")
+    private Loyalty loyalty;
 
     //region getters
     public int getId() {
@@ -36,6 +41,10 @@ public class User {
 
     public UserRole getRole() {
         return role;
+    }
+
+    public Loyalty getLoyalty() {
+        return loyalty;
     }
     //endregion
 
@@ -55,5 +64,9 @@ public class User {
     public void setRole(UserRole role) {
         this.role = role;
     }
-   //endregion
+
+    public void setLoyalty(Loyalty loyalty) {
+        this.loyalty = loyalty;
+    }
+    //endregion
 }

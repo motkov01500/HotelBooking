@@ -14,26 +14,32 @@ import java.util.Set;
 @Component
 public class PersistDataUtils {
 
-    private UserRepository userRepository;
-    private UserRoleRepository userRoleRepository;
-    private GuestInformationRepository guestInformationRepository;
-    private RoomRepository roomRepository;
-    private FacilityRepository facilityRepository;
-    private ReservationRepository reservationRepository;
+    private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final GuestInformationRepository guestInformationRepository;
+    private final RoomRepository roomRepository;
+    private final FacilityRepository facilityRepository;
+    private final ReservationRepository reservationRepository;
+    private final LoyaltyTypeRepository loyaltyTypeRepository;
 
     @Autowired
-    public PersistDataUtils(UserRepository userRepository, UserRoleRepository userRoleRepository, GuestInformationRepository guestInformationRepository, RoomRepository roomRepository, FacilityRepository facilityRepository, GuestReviewRepository guestReviewRepository, ReservationRepository reservationRepository) {
+    public PersistDataUtils(UserRepository userRepository, UserRoleRepository userRoleRepository,
+                            GuestInformationRepository guestInformationRepository, RoomRepository roomRepository,
+                            FacilityRepository facilityRepository, ReservationRepository reservationRepository,
+                            LoyaltyTypeRepository loyaltyTypeRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.guestInformationRepository = guestInformationRepository;
         this.roomRepository = roomRepository;
         this.facilityRepository = facilityRepository;
         this.reservationRepository = reservationRepository;
+        this.loyaltyTypeRepository = loyaltyTypeRepository;
     }
 
     @Transactional
     public List<Reservation> persistReservationOnCurrentDate() {
-        User user = persistUser("testtestov@gmail.com");
+        Loyalty loyalty = persistLoyalty("Golden", 10);
+        User user = persistUser("testtestov@gmail.com", loyalty);
         Set<GuestInformation> guestInformations = persistGuestInformations();
         Set<Room> rooms = persistRooms();
         Reservation reservation = TestDataUtils.createNormalReservation(user,false,guestInformations,rooms);
@@ -47,14 +53,24 @@ public class PersistDataUtils {
     }
 
     public Reservation persistReservation() {
-        User user = persistUser("testtestov@gmail.com");
+        Loyalty loyalty = persistLoyalty("Golden", 10);
+        User user = persistUser("testtestov@gmail.com", loyalty);
         Reservation reservation = TestDataUtils.createReservationOnFixedDate(user);
         reservationRepository.save(reservation);
         return reservation;
     }
 
-    public User persistUser(String email) {
-        UserRole role = persistUserRole();
+    public User persistUser(String email, Loyalty loyalty) {
+        UserRole role = persistUserRole("guest");
+        User user = new User();
+        user.setEmail(email);
+        user.setLoyalty(loyalty);
+        user.setPassword("test");
+        user.setRole(role);
+        return userRepository.save(user);
+    }
+
+    public User persistUserWithRole(String email, UserRole role) {
         User user = new User();
         user.setEmail(email);
         user.setPassword("test");
@@ -62,9 +78,9 @@ public class PersistDataUtils {
         return userRepository.save(user);
     }
 
-    public UserRole persistUserRole() {
+    public UserRole persistUserRole(String roleName) {
         UserRole role = new UserRole();
-        role.setRoleName("guest");
+        role.setRoleName(roleName);
         return userRoleRepository.save(role);
     }
 
@@ -103,10 +119,16 @@ public class PersistDataUtils {
         return facilities;
     }
 
+    public Loyalty persistLoyalty(String name, int discount) {
+        Loyalty loyalty = TestDataUtils.createLoyalty(name,discount);
+        loyaltyTypeRepository.save(loyalty);
+        return loyalty;
+    }
+
     public void cleanDatabase() {
-        reservationRepository.deleteAll();
-        userRepository.deleteAll();
         userRoleRepository.deleteAll();
+        userRepository.deleteAll();
+        reservationRepository.deleteAll();
         roomRepository.deleteAll();
         facilityRepository.deleteAll();
     }

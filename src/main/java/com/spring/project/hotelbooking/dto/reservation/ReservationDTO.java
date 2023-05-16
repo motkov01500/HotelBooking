@@ -16,6 +16,7 @@ public class ReservationDTO {
     private Set<RoomDTO> rooms;
     private Set<GuestInformationDTO> guestInformations;
     private UserDTO user;
+    private int totalPrice;
 
     //region getters
     public int getId() {
@@ -44,6 +45,10 @@ public class ReservationDTO {
 
     public UserDTO getUser() {
         return user;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
     }
     //endregion
 
@@ -74,6 +79,10 @@ public class ReservationDTO {
 
     public void setResConfirmation(boolean resConfirmation) {
         this.resConfirmation = resConfirmation;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
     //endregion
 }

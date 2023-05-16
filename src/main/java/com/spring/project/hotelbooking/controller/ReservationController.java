@@ -31,6 +31,12 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
+    @GetMapping("getReservationsForOneMonth")
+    public ResponseEntity<List<ReservationDTO>> getReservationForOneMonth(@RequestParam("userId") int userId) {
+        List<ReservationDTO> reservations = reservationService.getReservationForOneMonth(userId);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
     @GetMapping("getAllNotCheckedInReservations")
     public ResponseEntity<List<ReservationDTO>> getAllNotCheckedInReservations() {
         List<ReservationDTO> reservations = reservationService.getAllNotCheckedInReservations();

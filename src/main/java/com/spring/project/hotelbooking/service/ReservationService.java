@@ -47,18 +47,27 @@ public class ReservationService {
                 .toList();
     }
 
+    public List<ReservationDTO> getReservationForOneMonth(int userId) {
+        List<Reservation> reservations = reservationRepository.getUserReservationsForMonth(userId);
+        return reservations
+                .stream()
+                .map(reservationMapper::reservationToReservationDTO)
+                .toList();
+    }
+
     public Reservation createReservation(CreateReservationDTO reservationDTO) {
         Reservation createdReservation = reservationMapper.createReservationToReservation(reservationDTO);
         User user = userService.getUserById(reservationDTO.getUserId());
+        List<Reservation> reservationsCountToCurrentUser = reservationRepository
+                .getUserReservationsForMonth(user.getId());
+        userService.updateLoyaltyByCountOfReservations(reservationsCountToCurrentUser.size(), user.getId());
         createdReservation.setBookingId(UUID.randomUUID().toString());
         createdReservation.setUser(user);
         Reservation savedReservation = reservationRepository.save(createdReservation);
-        Set<Room> rooms = new HashSet<>();
-        for (int id: reservationDTO.getRoomIds()) {
-            Room room = roomService.getRoomById(id);
-            rooms.add(room);
-        }
+        Set<Room> rooms = getRoomsFromReservationDTO(reservationDTO);
         savedReservation.setRooms(rooms);
+        double priceOfRooms = calculatePriceOfRooms(rooms);
+        savedReservation.setTotalPrice(calculateTotalPriceOfRooms(priceOfRooms,user));
         return reservationRepository.save(savedReservation);
     }
 
@@ -70,7 +79,6 @@ public class ReservationService {
         return reservationRepository.save(reservationForUpdate);
     }
 
-    @Transactional
     public void deleteReservation(String id) {
         reservationRepository.deleteByBookingId(id);
     }
@@ -90,5 +98,27 @@ public class ReservationService {
         reservation.setResConfirmation(reservationCheckInDTO.isResConfirmation());
         reservation.setGuestInformations(reservationCheckInDTO.getGuestInformation());
         return reservationRepository.save(reservation);
+    }
+
+    private Set<Room> getRoomsFromReservationDTO(CreateReservationDTO reservationDTO) {
+        Set<Room> rooms = new HashSet<>();
+        for (int id: reservationDTO.getRoomIds()) {
+            Room room = roomService.getRoomById(id);
+            rooms.add(room);
+        }
+        return rooms;
+    }
+
+    private double calculateTotalPriceOfRooms(double priceOfRooms, User user) {
+        int discount = user.getLoyalty().getDiscount();
+        return priceOfRooms - ((priceOfRooms * discount)) / 100;
+    }
+
+    private double calculatePriceOfRooms(Set<Room> rooms) {
+        double sum = 0;
+        for (Room room: rooms) {
+            sum += room.getPricePerNight();
+        }
+        return sum;
     }
 }
