@@ -1,0 +1,40 @@
+<?xml version = "1.0"?>
+<Rooms>
+    <Room id="1">
+        <room_number>101</room_number>
+        <numberOfPlaces>5</numberOfPlaces>
+        <pricePerNight>225</pricePerNight>
+        <description>Compact bedrooms are suited for single occupancy or short-stay double occupancy as they have limited space and storage.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>3</id>
+            </facility>
+            <facility>
+                <id>4</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+    <Room id="2">
+        <room_number>102</room_number>
+        <numberOfPlaces>1</numberOfPlaces>
+        <pricePerNight>250</pricePerNight>
+        <description>A warm Tuscan style two-story room with a king size bed and outdoor balcony on the lower level, and a queen size bed in the upper floor loft. This room also contains a shower/tub combination with a granite vanity in the restroom.</description>
+        <facilities>
+            <facility>
+                <id>1</id>
+            </facility>
+            <facility>
+                <id>2</id>
+            </facility>
+            <facility>
+                <id>5</id>
+            </facility>
+        </facilities>
+    </Room>
+</Rooms>
